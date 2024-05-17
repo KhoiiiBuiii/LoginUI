@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.AdminPageControl">
-    <Label text="Admin Page"/>
-    <Button text="View Records" onAction="#handleViewRecords"/>
-    <Button text="Update Records" onAction="#handleUpdateRecords"/>
-    <Button text="Record History" onAction="#handleRecordHistory"/>
-    <Button text="CRUD Operations" onAction="#handleCrudOperations"/>
-    <Button text="Calculate Claimed Sum" onAction="#handleCalculateClaimedSum"/>
-    <Button text="Logout" onAction="#handleLogout"/>
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.example.AdminPageControl">
+    <Label fx:id="welcomeLabel" text="Welcome!" />
+    <Label text="Admin Page" />
+    <Button onAction="#handleSelfInformation" text="Self Information" />
+    <Button onAction="#handleViewClaims" text="View Claim" />
+    <Button onAction="#handleManagedCustomer" text="Manage Customer" />
+    <Button onAction="#handleCalculateClaimedSum" text="Calculate Claimed Sum" />
+    <Button onAction="#handleLogout" text="Logout" />
+    <VBox fx:id="additionalContentContainer">
+    </VBox>
 </VBox>
