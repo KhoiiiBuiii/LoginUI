@@ -73,6 +73,13 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static void showManagerPage() throws Exception {
+        Parent managerPage = FXMLLoader.load(Main.class.getResource("/ManagerPage.fxml"));
+        primaryStage.setTitle("Manager Page");
+        primaryStage.setScene(new Scene(managerPage, 800, 600));
+        primaryStage.show();
+    }
+
     public static void logout() throws Exception {
         showLoginPage();
     }

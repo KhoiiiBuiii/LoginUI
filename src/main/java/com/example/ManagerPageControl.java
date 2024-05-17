@@ -8,9 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.event.ActionEvent;
+import javafx.scene.control.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class DependantPageControl {
+public class ManagerPageControl {
     @FXML
     private Label welcomeLabel;
     @FXML
@@ -24,7 +27,15 @@ public class DependantPageControl {
     @FXML
     private Button selfInfoButton;
     @FXML
-    private Button viewClaimsButton;
+    private Button manageClaimsButton;
+    @FXML
+    private Button viewSurveyorsButton;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private VBox claimsContainer;
+
+    private Map<String, String> claimsData;
 
     public void initialize() {
         String loggedInUserName = getLoggedInUserName(); // Name method
@@ -39,7 +50,7 @@ public class DependantPageControl {
     // Name fetch logic
     private String getLoggedInUserName() {
         // Placeholder
-        return "Dependant";
+        return "Manager";
     }
 
     @FXML
@@ -135,55 +146,9 @@ public class DependantPageControl {
 
         additionalContentContainer.getChildren().add(userInfo);
     }
-    @FXML
-    private void handleViewClaimsButton() {
-        clearAdditionalContent();
-
-        // Mock data for multiple claims
-        String[] claims = {"Claim 1", "Claim 2", "Claim 3"};
-        VBox claimsList = new VBox(5);
-        for (String claim : claims) {
-            Hyperlink claimLink = new Hyperlink(claim);
-            claimLink.setOnAction(event -> showClaimDetails(claim));
-            claimsList.getChildren().add(claimLink);
-        }
-
-        additionalContentContainer.getChildren().add(claimsList);
-    }
-
-    private void showClaimDetails(String claim) {
-        clearAdditionalContent();
-
-        Label titleLabel = new Label("Claim Details: " + claim);
-        additionalContentContainer.getChildren().add(titleLabel);
-
-        // Mock data for claim details
-        String claimDate = "2024-05-20";
-        String insuredPerson = "John Doe";
-        String cardNumber = "1234 5678 9012 3456";
-        String examDate = "2024-05-25";
-        String documents = "Document 1, Document 2";
-        String claimAmount = "$1000";
-        String receiverBankingInfo = "Bank Name: ABC Bank, Account Number: 1234567890";
-
-        VBox claimDetails = new VBox(5);
-        claimDetails.getChildren().addAll(
-                new Label("Claim Date: " + claimDate),
-                new Label("Insured Person: " + insuredPerson),
-                new Label("Card Number: " + cardNumber),
-                new Label("Exam Date: " + examDate),
-                new Label("Documents: " + documents),
-                new Label("Claim Amount: " + claimAmount),
-                new Label("Receiver Banking Info: " + receiverBankingInfo)
-        );
-
-        additionalContentContainer.getChildren().add(claimDetails);
-    }
-
 
     private void clearAdditionalContent() {
         additionalContentContainer.getChildren().clear();
     }
 
 }
-

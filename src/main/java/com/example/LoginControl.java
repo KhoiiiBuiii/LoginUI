@@ -34,6 +34,8 @@ public class LoginControl {
                 Main.showDependantPage();
             } else if (username.equals("policyholder")) {
                 Main.showPolicyHolderPage();
+            } else if (username.equals("manager")) {
+                Main.showManagerPage();
             } else {
                 showAlert("Error", "Invalid user role");
             }
@@ -49,6 +51,7 @@ public class LoginControl {
                 || username.equals("provider") && password.equals("provider123")
                 || username.equals("policyowner") && password.equals("owner123")
                 || username.equals("dependant") && password.equals("dependant123")
+                || username.equals("manager") && password.equals("manager123")
                 || username.equals("policyholder") && password.equals("holder123");
     }
 

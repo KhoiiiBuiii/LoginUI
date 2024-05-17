@@ -8,6 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.event.ActionEvent;
+import javafx.stage.FileChooser;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import java.io.File;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 
 
 public class PolicyHolderPageControl {
@@ -27,6 +34,7 @@ public class PolicyHolderPageControl {
     private Button manageClaimsButton;
     @FXML
     private Button manageDependantsButton;
+    private File uploadedFile;
 
     public void initialize() {
         String loggedInUserName = getLoggedInUserName(); // Name method
@@ -156,6 +164,7 @@ public class PolicyHolderPageControl {
         buttonsContainer.getChildren().addAll(fileButton, viewButton, updateButton);
         additionalContentContainer.getChildren().add(buttonsContainer);
     }
+
     private void handleFileClaim() {
         clearAdditionalContent();
 
@@ -163,12 +172,14 @@ public class PolicyHolderPageControl {
         TextField insuredPersonField = new TextField();
         TextField cardNumberField = new TextField();
         TextField examDateField = new TextField();
-        TextField documentsField = new TextField();
+        Button uploadButton = new Button("Upload Document");
         TextField claimAmountField = new TextField();
         TextField receiverBankingInfoField = new TextField();
 
+        uploadButton.setOnAction(event -> handleFileUpload(uploadButton));
+
         Button saveButton = new Button("Save");
-        saveButton.setOnAction(event -> saveClaimDetails(claimDateField.getText(), insuredPersonField.getText(), cardNumberField.getText(), examDateField.getText(), documentsField.getText(), claimAmountField.getText(), receiverBankingInfoField.getText()));
+        saveButton.setOnAction(event -> saveClaimDetails(claimDateField.getText(), insuredPersonField.getText(), cardNumberField.getText(), examDateField.getText(), uploadedFile != null ? uploadedFile.getName() : "", claimAmountField.getText(), receiverBankingInfoField.getText()));
 
         VBox claimForm = new VBox(5);
         claimForm.getChildren().addAll(
@@ -176,7 +187,7 @@ public class PolicyHolderPageControl {
                 new Label("Insured Person:"), insuredPersonField,
                 new Label("Card Number:"), cardNumberField,
                 new Label("Exam Date:"), examDateField,
-                new Label("Documents:"), documentsField,
+                new Label("Document:"), uploadButton,
                 new Label("Claim Amount:"), claimAmountField,
                 new Label("Receiver Banking Info:"), receiverBankingInfoField,
                 saveButton
@@ -185,10 +196,18 @@ public class PolicyHolderPageControl {
         additionalContentContainer.getChildren().add(claimForm);
     }
 
+    private void handleFileUpload(Button uploadButton) {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            uploadedFile = file;
+            uploadButton.setText(file.getName());
+        }
+    }
+
     private void viewClaims() {
         clearAdditionalContent();
 
-        // Mock data for multiple claims
         String[] claims = {"Claim 1", "Claim 2", "Claim 3"};
         VBox claimsList = new VBox(5);
         for (String claim : claims) {
@@ -206,14 +225,16 @@ public class PolicyHolderPageControl {
         Label titleLabel = new Label("Claim Details: " + claim);
         additionalContentContainer.getChildren().add(titleLabel);
 
-        // Mock data for claim details
         String claimDate = "2024-05-20";
         String insuredPerson = "John Doe";
         String cardNumber = "1234 5678 9012 3456";
         String examDate = "2024-05-25";
-        String documents = "Document 1, Document 2";
+        String documents = "sample-document.jpg";
         String claimAmount = "$1000";
         String receiverBankingInfo = "Bank Name: ABC Bank, Account Number: 1234567890";
+
+        Hyperlink documentLink = new Hyperlink(documents);
+        documentLink.setOnAction(event -> showImageView(documents));
 
         VBox claimDetails = new VBox(5);
         claimDetails.getChildren().addAll(
@@ -221,27 +242,33 @@ public class PolicyHolderPageControl {
                 new Label("Insured Person: " + insuredPerson),
                 new Label("Card Number: " + cardNumber),
                 new Label("Exam Date: " + examDate),
-                new Label("Documents: " + documents),
+                new Label("Document: "), documentLink,
                 new Label("Claim Amount: " + claimAmount),
                 new Label("Receiver Banking Info: " + receiverBankingInfo)
         );
 
-        Button updateButton = new Button("Update");
-        updateButton.setOnAction(event -> handleUpdateClaim());
+        additionalContentContainer.getChildren().add(claimDetails);
+    }
 
-        additionalContentContainer.getChildren().addAll(claimDetails, updateButton);
+    private void showImageView(String document) {
+        Stage imageStage = new Stage();
+        ImageView imageView = new ImageView(new Image("file:" + document));
+        imageView.setFitWidth(600);
+        imageView.setFitHeight(800);
+        VBox vbox = new VBox(imageView);
+        Scene scene = new Scene(vbox);
+        imageStage.setScene(scene);
+        imageStage.show();
     }
 
     private void handleUpdateClaim() {
         clearAdditionalContent();
 
-        // Display form to update claim details
-        // Mock data for claim details
         String claimDate = "2024-05-20";
         String insuredPerson = "John Doe";
         String cardNumber = "1234 5678 9012 3456";
         String examDate = "2024-05-25";
-        String documents = "Document 1, Document 2";
+        String documents = "sample-document.jpg";
         String claimAmount = "$1000";
         String receiverBankingInfo = "Bank Name: ABC Bank, Account Number: 1234567890";
 
@@ -249,12 +276,15 @@ public class PolicyHolderPageControl {
         TextField insuredPersonField = new TextField(insuredPerson);
         TextField cardNumberField = new TextField(cardNumber);
         TextField examDateField = new TextField(examDate);
-        TextField documentsField = new TextField(documents);
+        Hyperlink documentLink = new Hyperlink(documents);
+        documentLink.setOnAction(event -> showImageView(documents));
+        Button uploadNewButton = new Button("Upload New");
+        uploadNewButton.setOnAction(event -> handleFileUpload(uploadNewButton));
         TextField claimAmountField = new TextField(claimAmount);
         TextField receiverBankingInfoField = new TextField(receiverBankingInfo);
 
         Button saveButton = new Button("Save");
-        saveButton.setOnAction(event -> saveClaimDetails(claimDateField.getText(), insuredPersonField.getText(), cardNumberField.getText(), examDateField.getText(), documentsField.getText(), claimAmountField.getText(), receiverBankingInfoField.getText()));
+        saveButton.setOnAction(event -> saveClaimDetails(claimDateField.getText(), insuredPersonField.getText(), cardNumberField.getText(), examDateField.getText(), uploadedFile != null ? uploadedFile.getName() : documents, claimAmountField.getText(), receiverBankingInfoField.getText()));
 
         VBox updateForm = new VBox(5);
         updateForm.getChildren().addAll(
@@ -262,7 +292,8 @@ public class PolicyHolderPageControl {
                 new Label("Insured Person:"), insuredPersonField,
                 new Label("Card Number:"), cardNumberField,
                 new Label("Exam Date:"), examDateField,
-                new Label("Documents:"), documentsField,
+                new Label("Document: "), documentLink,
+                uploadNewButton,
                 new Label("Claim Amount:"), claimAmountField,
                 new Label("Receiver Banking Info:"), receiverBankingInfoField,
                 saveButton
@@ -271,7 +302,24 @@ public class PolicyHolderPageControl {
         additionalContentContainer.getChildren().add(updateForm);
     }
 
-    private void saveClaimDetails(String claimDate, String insuredPerson, String cardNumber, String examDate, String documents, String claimAmount, String receiverBankingInfo) {
+    private void saveClaimDetails(String claimDate, String insuredPerson, String cardNumber, String examDate, String document, String claimAmount, String receiverBankingInfo) {
+        clearAdditionalContent();
+
+        Hyperlink documentLink = new Hyperlink(document);
+        documentLink.setOnAction(event -> showImageView(document));
+
+        VBox claimDetails = new VBox(5);
+        claimDetails.getChildren().addAll(
+                new Label("Claim Date: " + claimDate),
+                new Label("Insured Person: " + insuredPerson),
+                new Label("Card Number: " + cardNumber),
+                new Label("Exam Date: " + examDate),
+                new Label("Document: "), documentLink,
+                new Label("Claim Amount: " + claimAmount),
+                new Label("Receiver Banking Info: " + receiverBankingInfo)
+        );
+
+        additionalContentContainer.getChildren().add(claimDetails);
     }
 
     public void handleManageDependantsButton() {
