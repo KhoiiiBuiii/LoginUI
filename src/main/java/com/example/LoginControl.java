@@ -1,10 +1,10 @@
 package com.example;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 
 public class LoginControl {
 
@@ -15,51 +15,41 @@ public class LoginControl {
     private PasswordField passwordField;
 
     @FXML
-    private void handleLoginButtonAction() {
+    private void handleLoginButtonAction(ActionEvent event) throws Exception {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        try {
-            if (authenticate(username, password)) {
-                if (isAdmin(username, password)) {
-                    showAlert(AlertType.INFORMATION, "Login Successful", "Welcome Admin " + username + "!");
-                    Main.showAdminPage();
-                } else {
-                    showAlert(AlertType.INFORMATION, "Login Successful", "Welcome " + username + "!");
-                    Main.showMainPage();
-                }
+        if (isValidCredentials(username, password)) {
+            showAlert("Login Successful", "Welcome, " + username + "!");
+            // Determine user role and navigate to respective page
+            if (username.equals("admin")) {
+                Main.showAdminPage();
+            } else if (username.equals("customer")) {
+                Main.showCustomerPage();
+            } else if (username.equals("provider")) {
+                Main.showProviderPage();
+            } else if (username.equals("policyowner")) {
+                Main.showPolicyOwnerPage();
             } else {
-                showAlert(AlertType.ERROR, "Login Failed", "Incorrect username or password.");
+                showAlert("Error", "Invalid user role");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            showAlert("Login Failed", "Invalid username or password");
         }
     }
 
-    private boolean authenticate(String username, String password) {
-        // Predefined correct username and password for both user and admin
-        String correctUserUsername = "user";
-        String correctUserPassword = "pass";
-        String correctAdminUsername = "admin";
-        String correctAdminPassword = "adminpass";
-
-        // Check if the input username and password match either the user or admin credentials
-        return (correctUserUsername.equals(username) && correctUserPassword.equals(password)) ||
-                (correctAdminUsername.equals(username) && correctAdminPassword.equals(password));
+    private boolean isValidCredentials(String username, String password) {
+        // Add your authentication logic here
+        return username.equals("admin") && password.equals("admin123")
+                || username.equals("customer") && password.equals("customer123")
+                || username.equals("provider") && password.equals("provider123")
+                || username.equals("policyowner") && password.equals("owner123");
     }
 
-    private boolean isAdmin(String username, String password) {
-        // Predefined correct admin username and password
-        String correctAdminUsername = "ADMIN";
-        String correctAdminPassword = "ADMIN123";
-
-        // Check if the input username and password match the admin credentials
-        return correctAdminUsername.equals(username) && correctAdminPassword.equals(password);
-    }
-
-    private void showAlert(AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
