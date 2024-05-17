@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.MainPageControl">
+    <top>
+        <MenuBar>
+            <Menu text="Home">
+                <MenuItem text="Dashboard" onAction="#showDashboard" />
+            </Menu>
+            <Menu text="Policies">
+                <MenuItem text="View Policies" onAction="#viewPolicies" />
+                <MenuItem text="New Policy" onAction="#newPolicy" />
+            </Menu>
+            <Menu text="Claims">
+                <MenuItem text="File a Claim" onAction="#fileClaim" />
+                <MenuItem text="View Claims" onAction="#viewClaims" />
+            </Menu>
+            <Menu text="Contact Us">
+                <MenuItem text="Support" onAction="#contactSupport" />
+                <MenuItem text="About Us" onAction="#aboutUs" />
+            </Menu>
+        </MenuBar>
+    </top>
+</BorderPane>
