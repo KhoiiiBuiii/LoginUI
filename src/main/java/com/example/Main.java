@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-
 public class Main extends Application {
 
     private static Stage primaryStage;
@@ -25,14 +23,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     public static void showAdminPage() throws Exception {
         Parent adminPage = FXMLLoader.load(Main.class.getResource("/AdminPage.fxml"));
         primaryStage.setTitle("Admin Page");
         primaryStage.setScene(new Scene(adminPage, 600, 400));
         primaryStage.show();
     }
-
 
     public static void showPolicyOwnerPage() throws Exception {
         Parent policyOwnerPage = FXMLLoader.load(Main.class.getResource("/PolicyOwnerPage.fxml"));
@@ -55,10 +51,16 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static void showSurveyorPage() throws Exception {
+        Parent surveyorPage = FXMLLoader.load(Main.class.getResource("/SurveyorPage.fxml"));
+        primaryStage.setTitle("Surveyor Page");
+        primaryStage.setScene(new Scene(surveyorPage, 800, 600));
+        primaryStage.show();
+    }
+
     public static void logout() throws Exception {
         showLoginPage();
     }
-
 
     public static void main(String[] args) {
         launch(args);
