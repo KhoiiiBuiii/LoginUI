@@ -201,7 +201,6 @@ public class PolicyHolderPageControl {
     }
 
     private void showClaimDetails(String claim) {
-        // Clear previous additional content
         clearAdditionalContent();
 
         Label titleLabel = new Label("Claim Details: " + claim);
@@ -234,7 +233,6 @@ public class PolicyHolderPageControl {
     }
 
     private void handleUpdateClaim() {
-        // Clear previous additional content
         clearAdditionalContent();
 
         // Display form to update claim details
