@@ -23,12 +23,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void showMainPage() throws Exception {
-        Parent mainPage = FXMLLoader.load(Main.class.getResource("/MainPage.fxml"));
-        primaryStage.setTitle("Main Page");
-        primaryStage.setScene(new Scene(mainPage, 600, 400));
-        primaryStage.show();
-    }
 
     public static void showAdminPage() throws Exception {
         Parent adminPage = FXMLLoader.load(Main.class.getResource("/AdminPage.fxml"));
@@ -37,19 +31,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void showCustomerPage() throws Exception {
-        Parent customerPage = FXMLLoader.load(Main.class.getResource("/CustomerPage.fxml"));
-        primaryStage.setTitle("Customer Page");
-        primaryStage.setScene(new Scene(customerPage, 600, 400));
-        primaryStage.show();
-    }
-
-    public static void showProviderPage() throws Exception {
-        Parent providerPage = FXMLLoader.load(Main.class.getResource("/ProviderPage.fxml"));
-        primaryStage.setTitle("Provider Page");
-        primaryStage.setScene(new Scene(providerPage, 600, 400));
-        primaryStage.show();
-    }
 
     public static void showPolicyOwnerPage() throws Exception {
         Parent policyOwnerPage = FXMLLoader.load(Main.class.getResource("/PolicyOwnerPage.fxml"));

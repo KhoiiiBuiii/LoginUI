@@ -24,10 +24,6 @@ public class LoginControl {
             // Determine user role and navigate to respective page
             if (username.equals("admin")) {
                 Main.showAdminPage();
-            } else if (username.equals("customer")) {
-                Main.showCustomerPage();
-            } else if (username.equals("provider")) {
-                Main.showProviderPage();
             } else if (username.equals("policyowner")) {
                 Main.showPolicyOwnerPage();
             } else {
