@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
 
     private static Stage primaryStage;
@@ -38,6 +39,25 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(policyOwnerPage, 600, 400));
         primaryStage.show();
     }
+
+    public static void showPolicyHolderPage() throws Exception {
+        Parent policyHolderPage = FXMLLoader.load(Main.class.getResource("/PolicyHolderPage.fxml"));
+        primaryStage.setTitle("Policy Holder Page");
+        primaryStage.setScene(new Scene(policyHolderPage, 800, 600));
+        primaryStage.show();
+    }
+
+    public static void showDependantPage() throws Exception {
+        Parent dependantPage = FXMLLoader.load(Main.class.getResource("/DependantPage.fxml"));
+        primaryStage.setTitle("Dependant Page");
+        primaryStage.setScene(new Scene(dependantPage, 800, 600));
+        primaryStage.show();
+    }
+
+    public static void logout() throws Exception {
+        showLoginPage();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
