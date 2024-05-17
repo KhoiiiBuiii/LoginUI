@@ -37,18 +37,15 @@ public class PolicyHolderPageControl {
     private File uploadedFile;
 
     public void initialize() {
-        String loggedInUserName = getLoggedInUserName(); // Name method
+        String loggedInUserName = getLoggedInUserName();
         if (loggedInUserName != null && !loggedInUserName.isEmpty()) {
             welcomeLabel.setText("Welcome Back, " + loggedInUserName);
         } else {
-            // Placeholder because no data
             welcomeLabel.setText("Welcome!");
         }
     }
 
-    // Name fetch logic
     private String getLoggedInUserName() {
-        // Placeholder
         return "Policy Holder";
     }
 
@@ -76,10 +73,10 @@ public class PolicyHolderPageControl {
         viewButton.setOnAction(event -> showSelfInfo());
         updateButton.setOnAction(event -> enableSelfInfoEditing());
     }
+
     private void showSelfInfo() {
         clearAdditionalContent();
 
-        // Mock data for user
         String name = "User Name";
         String phone = "123-456-7890";
         String address = "123 Main St, City";
@@ -107,7 +104,6 @@ public class PolicyHolderPageControl {
         String email = "user@example.com";
         String password = "password";
 
-        // Info to text field
         TextField nameField = new TextField(name);
         TextField phoneField = new TextField(phone);
         TextField addressField = new TextField(address);
@@ -173,10 +169,9 @@ public class PolicyHolderPageControl {
         TextField cardNumberField = new TextField();
         TextField examDateField = new TextField();
         Button uploadButton = new Button("Upload Document");
+        uploadButton.setOnAction(event -> handleFileUpload(uploadButton));
         TextField claimAmountField = new TextField();
         TextField receiverBankingInfoField = new TextField();
-
-        uploadButton.setOnAction(event -> handleFileUpload(uploadButton));
 
         Button saveButton = new Button("Save");
         saveButton.setOnAction(event -> saveClaimDetails(claimDateField.getText(), insuredPersonField.getText(), cardNumberField.getText(), examDateField.getText(), uploadedFile != null ? uploadedFile.getName() : "", claimAmountField.getText(), receiverBankingInfoField.getText()));
@@ -196,12 +191,17 @@ public class PolicyHolderPageControl {
         additionalContentContainer.getChildren().add(claimForm);
     }
 
-    private void handleFileUpload(Button uploadButton) {
+    private void handleFileUpload(Button button) {
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(new Stage());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        File file = fileChooser.showOpenDialog(button.getScene().getWindow());
         if (file != null) {
-            uploadedFile = file;
-            uploadButton.setText(file.getName());
+            if (file.getName().toLowerCase().endsWith(".pdf")) {
+                uploadedFile = file;
+                button.setText(file.getName());
+            } else {
+                showError("File must be in PDF format.");
+            }
         }
     }
 
@@ -229,7 +229,7 @@ public class PolicyHolderPageControl {
         String insuredPerson = "John Doe";
         String cardNumber = "1234 5678 9012 3456";
         String examDate = "2024-05-25";
-        String documents = "sample-document.jpg";
+        String documents = "sample-document.pdf";
         String claimAmount = "$1000";
         String receiverBankingInfo = "Bank Name: ABC Bank, Account Number: 1234567890";
 
@@ -268,7 +268,7 @@ public class PolicyHolderPageControl {
         String insuredPerson = "John Doe";
         String cardNumber = "1234 5678 9012 3456";
         String examDate = "2024-05-25";
-        String documents = "sample-document.jpg";
+        String documents = "sample-document.pdf";
         String claimAmount = "$1000";
         String receiverBankingInfo = "Bank Name: ABC Bank, Account Number: 1234567890";
 
@@ -328,7 +328,6 @@ public class PolicyHolderPageControl {
         Label titleLabel = new Label("Manage Dependants");
         additionalContentContainer.getChildren().add(titleLabel);
 
-        // Mock dependant list
         String[] dependants = {"Dependant 1", "Dependant 2", "Dependant 3"};
         VBox dependantsList = new VBox(5);
         for (String dependant : dependants) {
@@ -345,7 +344,6 @@ public class PolicyHolderPageControl {
         Label titleLabel = new Label("Dependant Details: " + dependant);
         additionalContentContainer.getChildren().add(titleLabel);
 
-        // Mock data for dependant
         String phone = "123-456-7890";
         String address = "123 Main St, City";
         String email = "dependant@example.com";
@@ -364,7 +362,6 @@ public class PolicyHolderPageControl {
 
         additionalContentContainer.getChildren().addAll(dependantDetails, updateButton);
     }
-
 
     private void enableDependantEditing(VBox detailsContainer, String phone, String address, String email, String password) {
         detailsContainer.getChildren().clear();
@@ -401,4 +398,17 @@ public class PolicyHolderPageControl {
         additionalContentContainer.getChildren().clear();
     }
 
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
+
+
+
+
+
+
